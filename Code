@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link href='https://fonts.googleapis.com/css?family=Anonymous Pro'
+rel='stylesheet'>
+<style>
+	html 
+	{ 
+		height: 100%;
+	}
+	body 
+	{ 
+		margin: 20px; 
+		height: 100%; 
+		position: relative;
+		font-family: 'Anonymous Pro';
+		background-color: black;
+		color: white;
+	}
+	p
+	{
+		margin-left: 30px;
+	}
+	h1 
+	{
+		text-align: center;
+	}
+	h3 
+	{
+		text-align: center;
+	}
+	textarea
+	{
+		background-color: black;
+		color: white;
+	}
+    #settingsbutton
+	{
+		position: absolute;
+	   	right: 0;
+    }
+    #text
+	{
+		width: 100%;
+        height: 70vh;
+		position: static;
+		top: 100px;
+		right: 0;
+		left: 0;
+	}
+    Input 
+    {
+    	font-size: 125px;
+    	width: 100%;
+    	height: 550px;
+    	border: none;
+    	text-align: center;
+    	font-family: 'Anonymous Pro';
+    	background-color: black;
+	    color: cyan;
+    }
+</style>
+<script>
+    var z = getCookie('Storage');
+    if (!z) 
+    {
+        z=""
+    }
+    var word = true;
+    function pg1()
+    {
+        document.getElementById("page_2").style.display = "none";
+        document.getElementById("page_1").style.display = "block";
+        document.getElementById("settings").style.display = "none";
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        z = z + document.getElementById("edit").value;
+        document.getElementById("text").value = z; 
+        document.getElementById("edit").value = "";
+        document.getElementById("edit").placeholder = "type here";
+        setCookie('Storage',z,1);
+    }
+    function pg2()
+    {
+        z = document.getElementById("text").value;
+        document.getElementById("page_2").style.display = "block";
+        document.getElementById("page_1").style.display = "none";
+        document.getElementById("settings").style.display = "none";
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        setCookie('Storage',z,1);
+    }
+    function settings()
+    {
+        document.getElementById("settings").style.display = "block";
+        document.getElementById("page_2").style.display = "none";
+        document.getElementById("page_1").style.display = "none";
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        setCookie('Storage',z,1);
+    }
+    function keyDown(event)
+    {
+    	var x = event.keyCode;
+    	if (x == 13||x == 32) 
+    	{
+    		z = z + document.getElementById("edit").value;
+    		document.getElementById("edit").value = "";
+    		document.getElementById("edit").placeholder = "";
+    	    if(x == 32)
+            {
+                event.preventDefault();
+                z = z + " ";
+            }
+            if(x == 13)
+            {
+                z = z + "\n";
+            }
+        }
+        if (word == false)
+        {
+            z = z + document.getElementById("edit").value;
+    		document.getElementById("edit").value = "";
+        }
+    }
+    function firstFunction()
+    {
+        document.getElementById("text").placeholder = "";
+    	if(clicks == 0)
+    	{
+    		document.getElementById("text").value = z;
+    		clicks = 1;
+    	}
+    }
+    function full()
+    {
+        word = true;
+    }
+    function letter()
+    {
+        word = false;
+    }
+    function setCookie(name,value,days) 
+    {
+        var expires = "";
+        if (days) 
+        {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    }
+    function getCookie(name) 
+    {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) 
+        {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    function eraseCookie(name) 
+    {   
+        document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    }
+    //this will become a color selector later with all manner of colors with seperate background and text color selectors
+    //the colors will be the color of the word they say the selected one will be set apart somehow
+    //the backgrounds will have the background of the color they say and the selected one will be set apart somehow
+    function WhiteText()
+    {
+        alert("this needs some work");
+    }
+    function BlackBackground()
+    {
+        alert("this needs some work");
+    }
+    function BlackText()
+    {
+        alert("this needs some work");
+    }
+    function WhiteBackground()
+    {
+        alert("this needs some work");
+    }
+    function not_yet()
+    {
+        alert("this needs some work");
+    }
+    /* add it settings when working
+    <span>Backgroung color:</span><button onclick="BlackBackground()">Black</button><button onclick="WhiteBackground()">White</button>
+    <br>
+    <br>
+    <span>Text color:</span><button onclick="BlackText()">Black</button><button onclick="WhiteText()">White</button>
+    <br>
+    <br>
+    */
+</script>
+</head>
+<body>
+<div id="page_1" style="display:block">
+    <p3>Either click below or click continue typing for focused writing</p3>
+    <br>
+    <p3>when finished copy below text to document as this page doesn't save text upon exit</p3>
+    <br>
+    <textarea id="text" placeholder="edit text here"></textarea>
+    <br>
+    <a onclick="pg2()">continue typing</a><button id="settingsbutton" onclick="settings()">settings</button>
+</div>
+<div id="page_2" style="display:none">
+    <input id="edit" type="text" style="none" onkeydown="keyDown(event)" autocomplete="off" placeholder="type here"/>
+    <br>
+    <a id="back" onclick="pg1()" >back</a>
+</div>
+<div id="settings" style="display:none">
+    <span>Typing display:</span><button onclick="full()">word</button><button onclick="letter()">letter</button>
+    <br>
+    <a onclick="pg1()" >back</a>
+</div>
+</body>
+</html>
